@@ -2,45 +2,57 @@ const extraMemoryCost = document.getElementById("extra-memory-cost");
 const extraStorageCost = document.getElementById("extra-storage-cost");
 const deliveryCost = document.getElementById("delivery-cost");
 
-const totalPrice = document.getElementById("total-price");
+var totalPrice = document.getElementById("total-price");
 
-// update Total
-function updateTotal(selectItem) {
+var promo = document.getElementById("promo-input");
+
+const applyPromo = document.getElementById("apply");
+
+var finalTotal = document.getElementById("all-total");
+// update individual data
+function update(selectItem) {
   totalPrice.innerText = parseInt(selectItem.innerText) + 1299;
 }
 
+// update total
+function updateTotal() {
+  var total =
+    1299 +
+    parseInt(extraMemoryCost.innerText) +
+    parseInt(extraStorageCost.innerText) +
+    parseInt(deliveryCost.innerText);
+
+  // table total
+  totalPrice.innerText = total;
+  finalTotal.innerText = total;
+}
+
+function updateInputData(event, charge, inputData, updateData) {
+  document.getElementById(event).addEventListener("click", function () {
+    charge.innerText = "" + inputData;
+    update(updateData);
+    updateTotal();
+  });
+}
+
 // memory cost
-document.getElementById("memory-btn-8").addEventListener("click", function () {
-  extraMemoryCost.innerText = "0";
-  updateTotal(extraMemoryCost);
-});
-document.getElementById("memory-btn-16").addEventListener("click", function () {
-  extraMemoryCost.innerText = "180";
-  updateTotal(extraMemoryCost);
-});
-
+updateInputData("memory-btn-8", extraMemoryCost, "0", extraMemoryCost);
+updateInputData("memory-btn-16", extraMemoryCost, "180", extraMemoryCost);
 // storage cost
+updateInputData("SSD-256", extraStorageCost, "0", extraStorageCost);
+updateInputData("SSD-512", extraStorageCost, "100", extraStorageCost);
+updateInputData("SSD-1", extraStorageCost, "180", extraStorageCost);
 
-document.getElementById("SSD-256").addEventListener("click", function () {
-  extraStorageCost.innerText = "0";
-  updateTotal(extraStorageCost);
-});
-document.getElementById("SSD-512").addEventListener("click", function () {
-  extraStorageCost.innerText = "100";
-  updateTotal(extraStorageCost);
-});
-document.getElementById("SSD-1").addEventListener("click", function () {
-  extraStorageCost.innerText = "180";
-  updateTotal(extraStorageCost);
-});
+//delivery cost
+updateInputData("delivery-1", deliveryCost, "0", deliveryCost);
+updateInputData("delivery-2", deliveryCost, "20", deliveryCost);
 
-// delivery charge
-
-document.getElementById("delivery-1").addEventListener("click", function () {
-  deliveryCost.innerText = "0";
-  updateTotal(deliveryCost);
-});
-document.getElementById("delivery-2").addEventListener("click", function () {
-  deliveryCost.innerText = "20";
-  updateTotal(deliveryCost);
+// promo code
+applyPromo.addEventListener("click", function () {
+  const promoCode = finalTotal.innerText;
+  if (promo.value == "stevekaku") {
+    finalTotal.innerText = parseInt(promoCode) - parseInt(promoCode) * 0.2;
+  } else {
+    finalTotal.innerText = total;
+  }
 });
