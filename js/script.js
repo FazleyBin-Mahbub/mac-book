@@ -50,7 +50,11 @@ updateInputData("delivery-2", deliveryCost, "20", deliveryCost);
 // promo code
 applyPromo.addEventListener("click", function () {
   const promoCode = totalPrice.innerText;
+
   if (promo.value == "stevekaku") {
     finalTotal.innerText = parseInt(promoCode) - parseInt(promoCode) * 0.2;
+
+    // clear input
+    promo.value = "";
   }
 });
