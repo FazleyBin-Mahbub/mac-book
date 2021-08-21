@@ -48,12 +48,9 @@ updateInputData("delivery-1", deliveryCost, "0", deliveryCost);
 updateInputData("delivery-2", deliveryCost, "20", deliveryCost);
 
 // promo code
-applyPromo.addEventListener("click", function (event) {
-  const promoCode = finalTotal.innerText;
+applyPromo.addEventListener("click", function () {
+  const promoCode = totalPrice.innerText;
   if (promo.value == "stevekaku") {
     finalTotal.innerText = parseInt(promoCode) - parseInt(promoCode) * 0.2;
-    event.target.setAttribute("disabled", true);
-  } else {
-    finalTotal.innerText = total;
   }
 });
